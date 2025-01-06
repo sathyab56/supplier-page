@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Systems - Supplier Management</title>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            background-image: url('background.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        header img {
+            height: 50px;
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: #333;
+            margin: 0 10px;
+            font-weight: 500;
+        }
+
+        header nav a:hover {
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .form-container button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .form-container button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="IMG_3051.PNG" alt="Logo" class="logo">
+        <nav>
+            <a href="#addSupplier">Add Supplier</a>
+            <a href="suppliers.html">View Suppliers</a> <!-- Link to new page -->
+            <a href="#">Home</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div id="addSupplier" class="form-container">
+            <h2>Add New Supplier</h2>
+            <form id="supplierForm">
+                <div class="form-group">
+                    <input type="text" id="supplierName" placeholder="🗒️ Supplier name" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="gstNumber" placeholder="📰 GST number (Required)" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="productsSupplied" placeholder="📮 Products supplied">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="price" placeholder="🏷️ Price">
+                </div>
+                <div class="form-group">
+                    <input type="number" id="gstValue" placeholder="📰 GST value">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="supplierAddress" placeholder="📍 Supplier address">
+                </div>
+                <div class="form-group">
+                    <input type="text" id="contactNumber" placeholder="🖁 Contact number">
+                </div>
+                <button type="button" onclick="addSupplier()">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function addSupplier() {
+            const supplierData = {
+                name: document.getElementById('supplierName').value,
+                gst: document.getElementById('gstNumber').value,
+                products: document.getElementById('productsSupplied').value,
+                price: document.getElementById('price').value,
+                gstValue: document.getElementById('gstValue').value,
+                contact: document.getElementById('contactNumber').value,
+            };
+
+            if (!supplierData.gst) {
+                alert('GST Number is required!');
+                return;
+            }
+
+            // Save to localStorage
+            const suppliers = JSON.parse(localStorage.getItem('suppliers')) || [];
+            suppliers.push(supplierData);
+            localStorage.setItem('suppliers', JSON.stringify(suppliers));
+
+            alert('Supplier added successfully!');
+
+            // Reset the form after submission
+            document.getElementById('supplierForm').reset();
+        }
+    </script>
+</body>
+</html>

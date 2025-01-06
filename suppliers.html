@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supplier List</title>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: url('background.png') no-repeat center center fixed; /* Full-page background */
+            background-size: cover;
+            color: #333;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+             /* Semi-transparent background for better visibility */
+        }
+
+        header img {
+            height: 50px;
+        }
+
+        header h1 {
+            margin-left: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-container input {
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .search-container input:focus {
+            border-color: #007bff;
+        }
+
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background for table */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: rgba(0, 123, 255, 0.1); /* Slightly tinted background */
+            font-weight: 600;
+        }
+
+        td {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        h1 {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center;">
+            <img src="IMG_3051.PNG" alt="Logo" class="logo"> <!-- Add logo -->
+            <h1>Supplier List</h1>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Search Supplier by Name">
+        </div>
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Supplier</th>
+                <th>GST Number</th>
+                <th>Products Supplied</th>
+                <th>Price</th>
+                <th>GST Value</th>
+                <th>Contact Number</th>
+            </tr>
+        </thead>
+        <tbody id="supplierTable"></tbody>
+    </table>
+
+    <script>
+        // Load supplier data from localStorage
+        const suppliers = JSON.parse(localStorage.getItem('suppliers')) || [];
+        const tableBody = document.getElementById('supplierTable');
+        const searchBar = document.getElementById('searchBar');
+
+        // Function to display supplier list
+        function displaySuppliers(filteredSuppliers) {
+            tableBody.innerHTML = ''; // Clear existing rows
+            filteredSuppliers.forEach(supplier => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${supplier.name}</td>
+                    <td>${supplier.gst}</td>
+                    <td>${supplier.products}</td>
+                    <td>${supplier.price}</td>
+                    <td>${supplier.gstValue}</td>
+                    <td>${supplier.contact}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Display the full supplier list on page load
+        displaySuppliers(suppliers);
+
+        // Filter suppliers based on search input
+        searchBar.addEventListener('input', function () {
+            const searchTerm = searchBar.value.toLowerCase();
+            const filteredSuppliers = suppliers.filter(supplier => 
+                supplier.name.toLowerCase().includes(searchTerm)
+            );
+            displaySuppliers(filteredSuppliers);
+        });
+    </script>
+</body>
+</html>
